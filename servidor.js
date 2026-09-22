@@ -48,25 +48,85 @@ app.get('/treinos', (req, res) => {
 // ------------------------------------------------------------
 // GET /treinos/:id - busca um treino pelo id (404 se nao existir)
 // ------------------------------------------------------------
+app.get('/treinos/id', (req, res) => {
+    const id = Number(req.params.id);
+    const treino = treinos.find((t) => t.id === id);
 
-
+    if(treno === undefined) {
+        return res.status(404).json({ erro : 'Treino nao encontrado.' });
+    }
+     res.status(200).json(treino);
+});
 
 // ------------------------------------------------------------
 // POST /treinos - cria um treino (400 se os dados forem invalidos)
 // ------------------------------------------------------------
+app.post('/treinos', (req, res) => {
+    const erro = validarTreino (req.body);
+    if (erro !== null) {
+        return res.status(400).json({ erro: erro});
+    }
+ 
+    const treino = {
+        id: proximoId,
+        nome: req.body.nome,
+        duracao: req.body.duracao
+    };
+    proximoId = proximoId + 1;
+    treinos.push(treino);
+
+    res.status(201).json(treinos);
+});
 
 
 
 // ------------------------------------------------------------
 // PUT /treinos/:id - substitui um treino
 // ------------------------------------------------------------
+app.put('/treinos/:id', (req, res) => {
+    const id = Number(req.params.id);
 
+    const treino = treinos.find((t) => t.id === id);
+
+    if (treino === undefined) {
+        return res.status(404).json({
+            erro: 'Treino nao encontrado.'
+        });
+    }
+
+    const erro = validarTreino(req.body);
+
+    if (erro !== null) {
+        return res.status(400).json({
+            erro: erro
+        });
+    }
+
+    treino.nome = req.body.nome;
+    treino.duracao = req.body.duracao;
+
+    res.status(200).json(treino);
+});
 
 
 // ------------------------------------------------------------
 // DELETE /treinos/:id - remove um treino
 // ------------------------------------------------------------
+app.delete('/treinos/:id', (req, res) => {
+    const id = Number(req.params.id);
 
+    const posicao = treinos.findIndex((t) => t.id === id);
+
+    if (posicao === -1) {
+        return res.status(404).json({
+            erro: 'Treino nao encontrado.'
+        });
+    }
+
+    treinos.splice(posicao, 1);
+
+    res.status(204).end();
+});
 
 
 // ------------------------------------------------------------
