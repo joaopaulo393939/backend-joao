@@ -1,3 +1,3 @@
-Feedback - Aula 02 e Aula 03
+# Feedback - Aula 04
 
-João Paulo, na aula 2 quatro das cinco rotas estão certas, só uma não funciona, por isso ficou 0,15. Na aula 3 você entregou, mas o arquivo é idêntico ao do Henrique, enviado seis minutos depois, com os mesmos erros, isso não me deixa confirmar se foi você mesmo que entendeu e escreveu aquilo ali, ou se veio de outra pessoa. Como não dá pra validar isso, você fica só com a metade da nota, que é a parte da entrega, 0,10. Se quiser, me chama na próxima aula que eu te faço perguntas sobre o que tem naquele código. Se você conseguir me explicar, eu te dou a nota completa.
+João Paulo, a estrutura de controller, service e repository está certa, mas falta o banco.js. O repository chama require('../banco.js') e esse arquivo não existe no seu repositório, então o servidor quebra assim que alguém chama qualquer rota. Cria o banco.js com a conexão do SQLite, igual no aula04.md, e sobe de novo. Preciso lançar a nota até sexta-feira, resolve isso até lá.
