@@ -139,3 +139,52 @@ Content-Type: application/json
 
 ### Perfil do aluno
 GET http://localhost:3000/perfil
+
+
+### LOGIN CORRETO - DIEGO
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "usuario": "diego",
+    "senha": "1234"
+}
+
+### PERFIL DO DIEGO
+GET http://localhost:3000/perfil
+
+### LOGIN CORRETO - ALUNO
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "usuario": "aluno",
+    "senha": "senha"
+}
+
+### PERFIL DO ALUNO
+GET http://localhost:3000/perfil
+
+### SENHA ERRADA
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "usuario": "diego",
+    "senha": "9999"
+}
+
+### USUARIO INEXISTENTE
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "usuario": "nao-existe",
+    "senha": "1234"
+}
+
+### LOGOUT
+POST http://localhost:3000/logout
+
+### PERFIL DEPOIS DO LOGOUT
+GET http://localhost:3000/perfil

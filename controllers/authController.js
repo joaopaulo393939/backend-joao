@@ -12,17 +12,19 @@ function lerCookie(req, nome) {
     for (const par of pares) {
         const [chave, valor] = par.trim().split('=');
 
-        if (chave === nome) return valor;
+        if (chave === nome) {
+            return valor;
+        }
     }
 
     return null;
 }
 
-function login(req, res) {
+async function login(req, res) {
     const usuario = (req.body.usuario ?? '').trim();
     const senha = req.body.senha ?? '';
 
-    const resultado = service.login(usuario, senha);
+    const resultado = await service.login(usuario, senha);
 
     if (resultado.invalido === true) {
         return res.status(401).json({
@@ -33,6 +35,7 @@ function login(req, res) {
     const token = sessoes.criar(resultado.usuario.id);
 
     res.cookie('sid', token, { httpOnly: true });
+
     res.status(200).json(resultado.usuario);
 }
 
@@ -45,13 +48,13 @@ function usuarioDaRequisicao(req) {
 
     if (id === undefined) return null;
 
-    return usuariosRepository.buscarPorId(id);
+    return usuariosRepository.buscarPorId(id) ?? null;
 }
 
 function perfil(req, res) {
     const dono = usuarioDaRequisicao(req);
 
-    if (dono === null || dono === undefined) {
+    if (dono === null) {
         return res.status(401).json({
             erro: 'Faca login primeiro.'
         });
@@ -63,9 +66,12 @@ function perfil(req, res) {
 function logout(req, res) {
     const token = lerCookie(req, 'sid');
 
-    if (token !== null) sessoes.encerrar(token);
+    if (token !== null) {
+        sessoes.encerrar(token);
+    }
 
     res.clearCookie('sid');
+
     res.status(204).end();
 }
 
